@@ -1,15 +1,25 @@
 import React from "react";
-import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Navbar from "./components/navbar/Navbar";
-import LandingPage from "./pages/landing-page/LandingPage";
+import Home from "./pages/home/Home";
+import Login from "./pages/login/Login";
+import Eatlist from "./pages/eatlist/Eatlist";
+// import PersonalPage from "./pages/personalPage/PersonalPage";
 
 function App() {
   return (
-    <div className="App">
-      <Navbar></Navbar>
-      <LandingPage></LandingPage>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/">
+          <Route index element={<Home />} />
+          <Route path="login" element={<Login />} />
+          <Route path="users">
+            <Route path=":userId" element={<Eatlist />} />
+            {/* <Route path=":userId" element={<Eatlist />} /> */}
+          </Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
