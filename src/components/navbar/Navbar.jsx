@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { styled, alpha } from "@mui/material/styles";
+import { styled, alpha, createTheme } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -10,14 +10,33 @@ import InputBase from "@mui/material/InputBase";
 import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
+
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
+import LoginIcon from "@mui/icons-material/Login";
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
+import { Container } from "semantic-ui-react";
+import { ThemeProvider } from "@emotion/react";
 
 const drawerWidth = 240;
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#FE5274 ",
+      darker: "#C02241",
+      contrastText: "#fff",
+    },
+    neutral: {
+      main: "#FFF6F8",
+      contrastText: "black",
+    },
+  },
+});
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -67,9 +86,9 @@ export default function Navbar(props) {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  //   const handleProfileMenuOpen = (event) => {
+  //     setAnchorEl(event.currentTarget);
+  //   };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -129,11 +148,9 @@ export default function Navbar(props) {
     >
       <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
+          <LoginIcon />
         </IconButton>
-        <p>Messages</p>
+        <p>Login</p>
       </MenuItem>
       <MenuItem>
         <IconButton
@@ -141,13 +158,11 @@ export default function Navbar(props) {
           aria-label="show 17 new notifications"
           color="inherit"
         >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
+          <PersonAddAltIcon />
         </IconButton>
-        <p>Notifications</p>
+        <p>Sign Up</p>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
+      {/* <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
           aria-label="account of current user"
@@ -158,14 +173,15 @@ export default function Navbar(props) {
           <AccountCircle />
         </IconButton>
         <p>Profile</p>
-      </MenuItem>
+      </MenuItem> */}
     </Menu>
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1 }} className="navbar">
       <AppBar
         position="fixed"
+        color="primary"
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
@@ -197,20 +213,22 @@ export default function Navbar(props) {
               aria-label="show 4 new mails"
               color="inherit"
             >
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
+              <Box mr={1} sx={{ display: "flex", alignItems: "center" }}>
+                <LoginIcon />
+              </Box>
+              <Typography variant="subtitle1">Login</Typography>
             </IconButton>
             <IconButton
               size="large"
               aria-label="show 17 new notifications"
               color="inherit"
             >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
+              <Box mr={1} sx={{ display: "flex", alignItems: "center" }}>
+                <PersonAddAltIcon />
+              </Box>
+              <Typography variant="subtitle1">Sign Up</Typography>
             </IconButton>
-            <IconButton
+            {/* <IconButton
               size="large"
               edge="end"
               aria-label="account of current user"
@@ -220,7 +238,7 @@ export default function Navbar(props) {
               color="inherit"
             >
               <AccountCircle />
-            </IconButton>
+            </IconButton> */}
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton

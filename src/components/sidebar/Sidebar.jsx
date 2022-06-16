@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+
+import Logo from "../../assets/images/logo.png";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -65,7 +67,17 @@ export default function Sidebar(props: Props) {
 
   const drawer = (
     <div>
-      <Toolbar />
+      <Toolbar>
+        {/* {" "} */}
+        <Box
+          component="img"
+          sx={{
+            width: "100%",
+          }}
+          alt="logo"
+          src={Logo}
+        />
+      </Toolbar>
       <Divider />
       <List>
         {sidebarList.map((item) => (
