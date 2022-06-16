@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { styled, alpha, createTheme } from "@mui/material/styles";
+import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -23,20 +23,6 @@ import { Container } from "semantic-ui-react";
 import { ThemeProvider } from "@emotion/react";
 
 const drawerWidth = 240;
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#FE5274 ",
-      darker: "#C02241",
-      contrastText: "#fff",
-    },
-    neutral: {
-      main: "#FFF6F8",
-      contrastText: "black",
-    },
-  },
-});
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -104,7 +90,7 @@ export default function Navbar(props) {
   };
 
   const handleDrawerToggle = () => {
-    props.onSetMobileOpen(!mobileOpen);
+    props.onDrawerToggle(!mobileOpen);
   };
 
   const menuId = "primary-search-account-menu";

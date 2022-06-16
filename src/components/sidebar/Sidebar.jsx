@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 
+import Navbar from "../navbar/Navbar";
 import Logo from "../../assets/images/logo.png";
-import AppBar from "@mui/material/AppBar";
+
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
+
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -19,7 +19,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import MenuIcon from "@mui/icons-material/Menu";
 
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -56,19 +55,13 @@ export default function Sidebar(props: Props) {
     },
   ];
 
-  useEffect(() => {
-    setMobileOpen(props.mobileOpen);
-  }, [props.mobileOpen]);
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-    props.onSetMobileOpen(!mobileOpen);
+  const handleDrawerToggle = (openMobile) => {
+    setMobileOpen(openMobile);
   };
 
   const drawer = (
     <div>
       <Toolbar>
-        {/* {" "} */}
         <Box
           component="img"
           sx={{
@@ -109,28 +102,7 @@ export default function Sidebar(props: Props) {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      {/* <AppBar
-        position="fixed"
-        sx={{
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },
-        }}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Responsive drawer
-          </Typography>
-        </Toolbar>
-      </AppBar> */}
+      <Navbar onDrawerToggle={handleDrawerToggle} />
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -141,7 +113,7 @@ export default function Sidebar(props: Props) {
           container={container}
           variant="temporary"
           open={mobileOpen}
-          onClose={handleDrawerToggle}
+          onClose={() => setMobileOpen(false)}
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
           }}
