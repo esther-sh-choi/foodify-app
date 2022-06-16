@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
@@ -8,6 +8,9 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
+
+// import Signup from "../../components/authenticationCard/SignupCard";
+import Login from "../../components/authenticationCard/LoginCard";
 
 const drawerWidth = 240;
 
@@ -46,13 +49,17 @@ function a11yProps(index) {
 
 export default function FullWidthTabs() {
   const theme = useTheme();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   const handleChangeIndex = (index) => {
+    setValue(index);
+  };
+
+  const handleGoToSignup = (index) => {
     setValue(index);
   };
 
@@ -66,13 +73,7 @@ export default function FullWidthTabs() {
       }}
     >
       <Toolbar></Toolbar>
-      <Box
-        sx={{
-          bgcolor: "background.paper",
-
-          mt: 10,
-        }}
-      >
+      <Box>
         <AppBar
           position="static"
           sx={{ width: "100vw", display: { xs: "block", sm: "none" } }}
@@ -85,8 +86,8 @@ export default function FullWidthTabs() {
             variant="fullWidth"
             aria-label="full width tabs example"
           >
-            <Tab label="Item One" {...a11yProps(0)} />
-            <Tab label="Item Two" {...a11yProps(1)} />
+            <Tab label="Login" {...a11yProps(0)} />
+            <Tab label="Sign Up" {...a11yProps(1)} />
           </Tabs>
         </AppBar>
         <Box
@@ -95,9 +96,26 @@ export default function FullWidthTabs() {
             width: 500,
           }}
         >
+          <Toolbar />
           <Tabs value={value} onChange={handleChange} centered>
-            <Tab label="Item One" {...a11yProps(0)} />
-            <Tab label="Item Two" {...a11yProps(1)} />
+            <Tab
+              label="Login"
+              sx={{
+                background: "rgb(255, 255, 255, 0.8)",
+                width: 200,
+                borderTopLeftRadius: "10px",
+              }}
+              {...a11yProps(0)}
+            />
+            <Tab
+              label="Sign Up"
+              sx={{
+                background: "rgb(255, 255, 255, 0.8)",
+                width: 200,
+                borderTopRightRadius: "10px",
+              }}
+              {...a11yProps(1)}
+            />
           </Tabs>
         </Box>
         <SwipeableViews
@@ -106,10 +124,10 @@ export default function FullWidthTabs() {
           onChangeIndex={handleChangeIndex}
         >
           <TabPanel value={value} index={0} dir={theme.direction}>
-            Item One
+            <Login onSetSignUpIndex={handleGoToSignup} />
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
-            Item Two
+            sign up
           </TabPanel>
         </SwipeableViews>
       </Box>
