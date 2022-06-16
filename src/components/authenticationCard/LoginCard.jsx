@@ -38,10 +38,6 @@ const themeDark = createTheme({
 export default function LoginCard(props) {
   const [light, setLight] = useState(true);
 
-  const handleGoToSignup = () => {
-    props.onSetSignUpIndex(1);
-  };
-
   return (
     <ThemeProvider theme={light ? themeLight : themeDark}>
       <CssVarsProvider>
@@ -88,7 +84,7 @@ export default function LoginCard(props) {
             Log in
           </Button>
           <Typography
-            endDecorator={<Link onClick={handleGoToSignup}>Sign up</Link>}
+            endDecorator={<Link href="/signup">Sign up</Link>}
             fontSize="sm"
             sx={{ alignSelf: "center" }}
           >

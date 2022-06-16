@@ -50,10 +50,10 @@ function App() {
         <Routes>
           <Route path="/">
             <Route index element={<Home />} />
-            <Route path="login" element={<Login />} />
-            <Route path="users">
+            <Route path="/login" element={<Login index={0} />} />
+            <Route path="/signup" element={<Login index={1} />} />
+            <Route path="/library">
               <Route path=":userId" element={<Eatlist />} />
-              {/* <Route path=":userId" element={<Eatlist />} /> */}
             </Route>
           </Route>
         </Routes>

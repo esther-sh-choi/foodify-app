@@ -33,6 +33,7 @@ export default function Sidebar(props: Props) {
     {
       title: "Home",
       icon: <HomeIcon />,
+      href: "/",
     },
     {
       title: "Search",
@@ -41,6 +42,7 @@ export default function Sidebar(props: Props) {
     {
       title: "Your Library",
       icon: <LibraryAddCheckIcon />,
+      href: "/library",
     },
   ];
 
@@ -48,10 +50,12 @@ export default function Sidebar(props: Props) {
     {
       title: "Create Eatlist",
       icon: <LibraryAddIcon />,
+      href: "/eatlist",
     },
     {
       title: "Saved Eatlist",
       icon: <FavoriteIcon />,
+      href: "/library",
     },
   ];
 
@@ -62,19 +66,29 @@ export default function Sidebar(props: Props) {
   const drawer = (
     <div>
       <Toolbar>
-        <Box
-          component="img"
-          sx={{
-            width: "100%",
-          }}
-          alt="logo"
-          src={Logo}
-        />
+        <a href="/">
+          <Box
+            component="img"
+            sx={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+            }}
+            alt="logo"
+            src={Logo}
+          />
+        </a>
       </Toolbar>
       <Divider />
       <List>
         {sidebarList.map((item) => (
-          <ListItem key={item.title} disablePadding>
+          <ListItem
+            button
+            component="a"
+            key={item.title}
+            href={item.href}
+            disablePadding
+          >
             <ListItemButton>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.title} />
@@ -85,7 +99,13 @@ export default function Sidebar(props: Props) {
       <Divider />
       <List>
         {sidebarSublist.map((item) => (
-          <ListItem key={item.title} disablePadding>
+          <ListItem
+            button
+            component="a"
+            key={item.title}
+            href={item.href}
+            disablePadding
+          >
             <ListItemButton>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.title} />

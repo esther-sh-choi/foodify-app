@@ -133,29 +133,17 @@ export default function Navbar(props) {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" color="inherit">
+        <IconButton size="large" color="inherit" href="/login">
           <LoginIcon />
         </IconButton>
         <p>Login</p>
       </MenuItem>
       <MenuItem>
-        <IconButton size="large" color="inherit">
+        <IconButton size="large" color="inherit" href="/signup">
           <PersonAddAltIcon />
         </IconButton>
         <p>Sign Up</p>
       </MenuItem>
-      {/* <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem> */}
     </Menu>
   );
 
@@ -190,13 +178,13 @@ export default function Navbar(props) {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton size="large" color="inherit">
+            <IconButton size="large" color="inherit" href="/login">
               <Box mr={1} sx={{ display: "flex", alignItems: "center" }}>
                 <LoginIcon />
               </Box>
               <Typography variant="subtitle1">Login</Typography>
             </IconButton>
-            <IconButton size="large" color="inherit">
+            <IconButton size="large" color="inherit" href="/signup">
               <Box mr={1} sx={{ display: "flex", alignItems: "center" }}>
                 <PersonAddAltIcon />
               </Box>

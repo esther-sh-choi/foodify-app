@@ -47,9 +47,9 @@ function a11yProps(index) {
   };
 }
 
-export default function FullWidthTabs() {
+export default function FullWidthTabs(props) {
   const theme = useTheme();
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(props.index);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
