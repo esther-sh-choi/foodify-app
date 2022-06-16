@@ -1,12 +1,10 @@
 import React from "react";
 import "./home.scss";
 
+import Navbar from "../../components/navbar/Navbar";
+
 function Home() {
-  return (
-    <div className="home">
-      <h1 className="title">Foodify</h1>
-    </div>
-  );
+  return <div className="home">Home</div>;
 }
 
 export default Home;
