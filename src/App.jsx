@@ -13,10 +13,12 @@ import Eatlist from "./pages/eatlist/Eatlist";
 
 import "./app.scss";
 
-const theme = createTheme({
+const themeLight = createTheme({
   palette: {
     primary: {
       main: "#FE5274 ",
+      maingradient:
+        "linear-gradient(158deg, rgba(220,184,255,1) 0%, rgba(250,182,203,1) 50%, rgba(255,116,176,1) 100%)",
       darker: "#C02241",
       contrastText: "#fff",
     },
@@ -27,11 +29,22 @@ const theme = createTheme({
   },
 });
 
+const themeDark = createTheme({
+  palette: {
+    background: {
+      default: "#222222",
+    },
+    text: {
+      primary: "#ffffff",
+    },
+  },
+});
+
 function App() {
-  const [mobileOpen, setMobileOpen] = useState();
+  const [light, setLight] = useState(true);
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={light ? themeLight : themeDark}>
       <div className="app">
         <Sidebar />
         <Routes>
