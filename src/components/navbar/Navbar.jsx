@@ -133,17 +133,13 @@ export default function Navbar(props) {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+        <IconButton size="large" color="inherit">
           <LoginIcon />
         </IconButton>
         <p>Login</p>
       </MenuItem>
       <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
+        <IconButton size="large" color="inherit">
           <PersonAddAltIcon />
         </IconButton>
         <p>Sign Up</p>
@@ -194,37 +190,18 @@ export default function Navbar(props) {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-            >
+            <IconButton size="large" color="inherit">
               <Box mr={1} sx={{ display: "flex", alignItems: "center" }}>
                 <LoginIcon />
               </Box>
               <Typography variant="subtitle1">Login</Typography>
             </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
+            <IconButton size="large" color="inherit">
               <Box mr={1} sx={{ display: "flex", alignItems: "center" }}>
                 <PersonAddAltIcon />
               </Box>
               <Typography variant="subtitle1">Sign Up</Typography>
             </IconButton>
-            {/* <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton> */}
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
