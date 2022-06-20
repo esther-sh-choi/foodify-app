@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 
-// import Signup from "../../components/authenticationCard/SignupCard";
+import Signup from "../../components/authenticationCard/SignupCard";
 import Login from "../../components/authenticationCard/LoginCard";
 
 const drawerWidth = 240;
@@ -118,7 +118,13 @@ export default function FullWidthTabs(props) {
             />
           </Tabs>
         </Box>
-        <SwipeableViews
+        <TabPanel value={value} index={0}>
+          <Login onSetSignUpIndex={handleGoToSignup} />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <Signup />
+        </TabPanel>
+        {/* <SwipeableViews
           axis={theme.direction === "rtl" ? "x-reverse" : "x"}
           index={value}
           onChangeIndex={handleChangeIndex}
@@ -127,9 +133,9 @@ export default function FullWidthTabs(props) {
             <Login onSetSignUpIndex={handleGoToSignup} />
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
-            sign up
+            <Signup />
           </TabPanel>
-        </SwipeableViews>
+        </SwipeableViews> */}
       </Box>
     </Box>
   );

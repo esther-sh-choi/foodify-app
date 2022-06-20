@@ -1,97 +1,143 @@
-import React from "react";
-import { CssVarsProvider } from "@mui/joy/styles";
-import { createTheme } from "@mui/material/styles";
-import { ThemeProvider } from "@emotion/react";
-import Sheet from "@mui/joy/Sheet";
-import Typography from "@mui/joy/Typography";
-import TextField from "@mui/joy/TextField";
-import Button from "@mui/joy/Button";
-import Link from "@mui/joy/Link";
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-const themeLight = createTheme({
-  palette: {
-    primary: {
-      main: "#FE5274 ",
-      maingradient:
-        "linear-gradient(158deg, rgba(220,184,255,1) 0%, rgba(250,182,203,1) 50%, rgba(255,116,176,1) 100%)",
-      darker: "#C02241",
-      contrastText: "#fff",
-    },
-    neutral: {
-      main: "#FFF6F8",
-      contrastText: "black",
-    },
-  },
-});
+function Copyright(props) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="https://mui.com/">
+        Your Website
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
 
-const themeDark = createTheme({
-  palette: {
-    background: {
-      default: "#222222",
-    },
-    text: {
-      primary: "#ffffff",
-    },
-  },
-});
+const theme = createTheme();
 
-export default function SignupCard() {
-  const [light, setLight] = useState(true);
+export default function SignUp() {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get("email"),
+      password: data.get("password"),
+    });
+  };
 
   return (
-    <ThemeProvider theme={light ? themeLight : themeDark}>
-      <CssVarsProvider>
-        <Sheet
-          variant="outlined"
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
           sx={{
-            maxWidth: 400,
-            mx: "auto", // margin left & right
-            my: 4, // margin top & botom
-            py: 3, // padding top & bottom
-            px: 2, // padding left & right
+            marginTop: 8,
             display: "flex",
             flexDirection: "column",
-            gap: 2,
-            borderRadius: "sm",
-            boxShadow: "md",
+            alignItems: "center",
           }}
         >
-          <div>
-            <Typography level="h4" component="h1">
-              <b>Welcome!</b>
-            </Typography>
-            <Typography level="body2">Sign in to continue</Typography>
-          </div>
-          <TextField
-            // html input attribute
-            name="email"
-            type="email"
-            placeholder="johndoe@email.com"
-            // pass down to FormLabel as children
-            label="Email"
-          />
-          <TextField
-            name="password"
-            type="password"
-            placeholder="password"
-            label="Password"
-          />
-          <Button
-            sx={{
-              mt: 1, // margin top
-            }}
-          >
-            Log in
-          </Button>
-          <Typography
-            endDecorator={<Link href="/sign-up">Sign up</Link>}
-            fontSize="sm"
-            sx={{ alignSelf: "center" }}
-          >
-            Don't have an account?
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
           </Typography>
-        </Sheet>
-      </CssVarsProvider>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="given-name"
+                  name="firstName"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  autoComplete="family-name"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox value="allowExtraEmails" color="primary" />
+                  }
+                  label="I want to receive inspiration, marketing promotions and updates via email."
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign Up
+            </Button>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link href="#" variant="body2">
+                  Already have an account? Sign in
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+        <Copyright sx={{ mt: 5 }} />
+      </Container>
     </ThemeProvider>
   );
 }
