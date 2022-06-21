@@ -3,10 +3,14 @@ import { createTheme } from "@mui/material/styles";
 import { ThemeProvider } from "@emotion/react";
 import { CssVarsProvider } from "@mui/joy/styles";
 import Sheet from "@mui/joy/Sheet";
-import Typography from "@mui/joy/Typography";
-import TextField from "@mui/joy/TextField";
-import Button from "@mui/joy/Button";
-import Link from "@mui/joy/Link";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 
 const themeLight = createTheme({
   palette: {
@@ -38,60 +42,71 @@ const themeDark = createTheme({
 export default function LoginCard(props) {
   const [light, setLight] = useState(true);
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(123);
+  };
+
   return (
-    <ThemeProvider theme={light ? themeLight : themeDark}>
-      <CssVarsProvider>
-        <Sheet
-          variant="outlined"
-          sx={{
-            maxWidth: 400,
-            mx: "auto", // margin left & right
-            py: 3, // padding top & bottom
-            px: 2, // padding left & right
-            display: "flex",
-            flexDirection: "column",
-            gap: 2,
-            borderRadius: "sm",
-            boxShadow: "md",
-          }}
-        >
-          <div>
-            <Typography level="h4" component="h1">
-              <b>Welcome!</b>
+    <Box
+      sx={{
+        width: { sm: 500, md: 600 },
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        backgroundColor: "white",
+        padding: "20px",
+      }}
+    >
+      <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Typography variant="h5" textAlign="center" component="h1">
+              <b>WELCOME BACK!</b>
             </Typography>
-            <Typography level="body2">Sign in to continue</Typography>
-          </div>
-          <TextField
-            // html input attribute
-            name="email"
-            type="email"
-            placeholder="johndoe@email.com"
-            // pass down to FormLabel as children
-            label="Email"
-          />
-          <TextField
-            name="password"
-            type="password"
-            placeholder="password"
-            label="Password"
-          />
-          <Button
-            sx={{
-              mt: 1, // margin top
-            }}
-            color="primary"
-          >
-            Log in
-          </Button>
-          <Typography
-            endDecorator={<Link href="/signup">Sign up</Link>}
-            fontSize="sm"
-            sx={{ alignSelf: "center" }}
-          >
-            Don't have an account?
-          </Typography>
-        </Sheet>
-      </CssVarsProvider>
-    </ThemeProvider>
+            <Typography level="body2" textAlign="center">
+              Sign in to continue
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="new-password"
+            />
+          </Grid>
+        </Grid>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+        >
+          Login
+        </Button>
+        <Grid container justifyContent="flex-end">
+          <Grid item>
+            <Link href="/login" variant="body2">
+              Don't have an account? Sign up
+            </Link>
+          </Grid>
+        </Grid>
+      </Box>
+    </Box>
   );
 }
