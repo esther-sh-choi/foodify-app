@@ -9,8 +9,8 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 
-// import Signup from "../../components/authenticationCard/SignupCard";
-import Login from "../../components/authenticationCard/LoginCard";
+import SignupCard from "../../components/authenticationCard/SignupCard";
+import LoginCard from "../../components/authenticationCard/LoginCard";
 
 const drawerWidth = 240;
 
@@ -47,9 +47,9 @@ function a11yProps(index) {
   };
 }
 
-export default function FullWidthTabs() {
+export default function FullWidthTabs(props) {
   const theme = useTheme();
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(props.index);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -70,9 +70,14 @@ export default function FullWidthTabs() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        justifyContent: { xs: "flex-start", sm: "center" },
       }}
     >
-      <Toolbar></Toolbar>
+      <Toolbar
+        sx={{
+          display: { xs: "block", sm: "none" },
+        }}
+      ></Toolbar>
       <Box>
         <AppBar
           position="static"
@@ -93,7 +98,8 @@ export default function FullWidthTabs() {
         <Box
           sx={{
             display: { xs: "none", sm: "block" },
-            width: 500,
+            flex: { sm: "1" },
+            width: { sm: 500, md: 600 },
           }}
         >
           <Toolbar />
@@ -102,7 +108,7 @@ export default function FullWidthTabs() {
               label="Login"
               sx={{
                 background: "rgb(255, 255, 255, 0.8)",
-                width: 200,
+                width: { sm: 250, md: 300 },
                 borderTopLeftRadius: "10px",
               }}
               {...a11yProps(0)}
@@ -111,26 +117,21 @@ export default function FullWidthTabs() {
               label="Sign Up"
               sx={{
                 background: "rgb(255, 255, 255, 0.8)",
-                width: 200,
+                width: { sm: 250, md: 300 },
                 borderTopRightRadius: "10px",
               }}
               {...a11yProps(1)}
             />
           </Tabs>
         </Box>
-        <SwipeableViews
-          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-          index={value}
-          onChangeIndex={handleChangeIndex}
-        >
-          <TabPanel value={value} index={0} dir={theme.direction}>
-            <Login onSetSignUpIndex={handleGoToSignup} />
-          </TabPanel>
-          <TabPanel value={value} index={1} dir={theme.direction}>
-            sign up
-          </TabPanel>
-        </SwipeableViews>
       </Box>
+
+      <TabPanel value={value} index={0}>
+        <LoginCard onSetSignUpIndex={handleGoToSignup} />
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        <SignupCard />
+      </TabPanel>
     </Box>
   );
 }

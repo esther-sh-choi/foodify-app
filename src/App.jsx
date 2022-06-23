@@ -8,8 +8,8 @@ import Sidebar from "./components/sidebar/Sidebar";
 
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
-import Eatlist from "./pages/eatlist/Eatlist";
-// import PersonalPage from "./pages/personalPage/PersonalPage";
+import Library from "./pages/library/Library";
+import SavedList from "./pages/savedList/SavedList";
 
 import "./app.scss";
 
@@ -50,10 +50,10 @@ function App() {
         <Routes>
           <Route path="/">
             <Route index element={<Home />} />
-            <Route path="login" element={<Login />} />
-            <Route path="users">
-              <Route path=":userId" element={<Eatlist />} />
-              {/* <Route path=":userId" element={<Eatlist />} /> */}
+            <Route path="/login" element={<Login index={0} />} />
+            <Route path="/signup" element={<Login index={1} />} />
+            <Route path="/library" element={<Library />}>
+              <Route path=":saved" element={<SavedList />} />
             </Route>
           </Route>
         </Routes>

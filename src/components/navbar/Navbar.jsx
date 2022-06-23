@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import LogoSmall from "../../assets/images/logo-small.png";
+
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -7,15 +9,11 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
-import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import LoginIcon from "@mui/icons-material/Login";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
@@ -93,28 +91,6 @@ export default function Navbar(props) {
     props.onDrawerToggle(!mobileOpen);
   };
 
-  const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
-
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
@@ -132,30 +108,34 @@ export default function Navbar(props) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" color="inherit">
-          <LoginIcon />
-        </IconButton>
-        <p>Login</p>
+      <MenuItem
+        sx={{
+          width: "150px",
+          display: "flex",
+          alignItems: "center",
+        }}
+        component="a"
+        href="/login"
+      >
+        <LoginIcon sx={{ marginRight: "5px" }} />
+        <Typography variant="subtitle1" textAlign="center" sx={{ flex: "1" }}>
+          Login
+        </Typography>
       </MenuItem>
-      <MenuItem>
-        <IconButton size="large" color="inherit">
-          <PersonAddAltIcon />
-        </IconButton>
-        <p>Sign Up</p>
+      <MenuItem
+        sx={{
+          width: "150px",
+          display: "flex",
+          alignItems: "center",
+        }}
+        component="a"
+        href="/signup"
+      >
+        <PersonAddAltIcon sx={{ marginRight: "5px" }} />
+        <Typography variant="subtitle1" textAlign="center" sx={{ flex: "1" }}>
+          Sign Up
+        </Typography>
       </MenuItem>
-      {/* <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem> */}
     </Menu>
   );
 
@@ -170,6 +150,19 @@ export default function Navbar(props) {
         }}
       >
         <Toolbar>
+          <a href="/">
+            <Box
+              component="img"
+              sx={{
+                width: "45px",
+                display: { xs: "block", sm: "none" },
+                objectFit: "contain",
+                marginRight: "20px",
+              }}
+              alt="logo icon"
+              src={LogoSmall}
+            />
+          </a>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -190,13 +183,13 @@ export default function Navbar(props) {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton size="large" color="inherit">
+            <IconButton size="large" color="inherit" href="/login">
               <Box mr={1} sx={{ display: "flex", alignItems: "center" }}>
                 <LoginIcon />
               </Box>
               <Typography variant="subtitle1">Login</Typography>
             </IconButton>
-            <IconButton size="large" color="inherit">
+            <IconButton size="large" color="inherit" href="/signup">
               <Box mr={1} sx={{ display: "flex", alignItems: "center" }}>
                 <PersonAddAltIcon />
               </Box>
@@ -218,7 +211,6 @@ export default function Navbar(props) {
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
-      {renderMenu}
     </Box>
   );
 }
