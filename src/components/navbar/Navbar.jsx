@@ -1,5 +1,12 @@
 import React, { useState } from "react";
 
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import usePlacesAutocomplete, {
+  getGeocode,
+  getLatLng,
+} from "use-places-autocomplete";
+import useOnclickOutside from "react-cool-onclickoutside";
+
 import LogoSmall from "../../assets/images/logo-small.png";
 
 import { styled, alpha } from "@mui/material/styles";
@@ -11,6 +18,7 @@ import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
+import Popover from "@mui/material/Popover";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
@@ -19,8 +27,10 @@ import LoginIcon from "@mui/icons-material/Login";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import { Container } from "semantic-ui-react";
 import { ThemeProvider } from "@emotion/react";
+// import { Popover } from "@mui/material";
 
 const drawerWidth = 240;
+const libraries = ["places"];
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -69,6 +79,15 @@ export default function Navbar(props) {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const { isLoaded, loadError } = useLoadScript({
+    // googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    googleMapsApiKey: "AIzaSyAO_AswjQW9ZtbedjSwaM0GnTAY8zSJpoo",
+    libraries,
+  });
+
+  if (loadError) return "Error loading maps";
+  if (!isLoaded) return "Loading...";
 
   //   const handleProfileMenuOpen = (event) => {
   //     setAnchorEl(event.currentTarget);
@@ -172,15 +191,9 @@ export default function Navbar(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
+
+          <GoogleSearch></GoogleSearch>
+
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton size="large" color="inherit" href="/login">
@@ -212,5 +225,64 @@ export default function Navbar(props) {
       </AppBar>
       {renderMobileMenu}
     </Box>
+  );
+}
+
+function GoogleSearch() {
+  const {
+    ready,
+    value,
+    suggestions: { status, data },
+    setValue,
+    clearSuggestions,
+  } = usePlacesAutocomplete({
+    requestOptions: {
+      // location is default set to Toronto, but eventually will get user's local place
+      location: { lat: () => 43.653225, lng: () => -79.383186 },
+      radius: 200 * 1000,
+    },
+  });
+
+  const ref = useOnclickOutside(() => {
+    // When user clicks outside of the component, we can dismiss
+    // the searched suggestions by calling this method
+    clearSuggestions();
+  });
+
+  const handleSelect = async (address) => {
+    setValue(address, false);
+    console.log(address);
+    clearSuggestions();
+
+    const results = await getGeocode({ address });
+    const { lat, lng } = await getLatLng(results[0]);
+  };
+
+  return (
+    <Search ref={ref}>
+      <SearchIconWrapper>
+        <SearchIcon />
+      </SearchIconWrapper>
+      <StyledInputBase
+        placeholder="Search food..."
+        inputProps={{ "aria-label": "search" }}
+        value={value}
+        onChange={(e) => {
+          setValue(e.target.value);
+        }}
+        disabled={!ready}
+      />
+
+      <Menu>
+        {status === "OK" &&
+          data.map(({ place_id, description }) => {
+            <MenuItem
+              key={place_id}
+              value={description}
+              onSelect={handleSelect}
+            ></MenuItem>;
+          })}
+      </Menu>
+    </Search>
   );
 }

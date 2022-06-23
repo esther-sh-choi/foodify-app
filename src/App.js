@@ -10,6 +10,7 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Library from "./pages/library/Library";
 import SavedList from "./pages/savedList/SavedList";
+import SearchPage from "./pages/search/SearchPage";
 
 import "./app.scss";
 
@@ -55,6 +56,7 @@ function App() {
             <Route path="/library" element={<Library />}>
               <Route path=":saved" element={<SavedList />} />
             </Route>
+            <Route path="/search" element={<SearchPage />} />
           </Route>
         </Routes>
       </div>
