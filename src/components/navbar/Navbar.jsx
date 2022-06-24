@@ -81,8 +81,7 @@ export default function Navbar(props) {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const { isLoaded, loadError } = useLoadScript({
-    // googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    googleMapsApiKey: "AIzaSyAO_AswjQW9ZtbedjSwaM0GnTAY8zSJpoo",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
 
