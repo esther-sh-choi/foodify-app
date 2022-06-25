@@ -22,7 +22,7 @@ function SearchPage() {
       <Toolbar />
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
-          {/* <Map></Map> */}Map
+          <Map></Map>
         </Grid>
         <Grid item xs={12} md={4}>
           <SearchList></SearchList>
