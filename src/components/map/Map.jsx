@@ -1,5 +1,5 @@
-import React from "react";
-import GoogleMapReact from "google-map-react";
+import React, { useState, useCallback } from "react";
+import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { Paper, Typography, useMediaQuery } from "@mui/material";
 import Rating from "@mui/lab";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -28,23 +28,49 @@ const MarkerContainer = styled("div")(({ theme }) => ({
   },
 }));
 
+const containerStyle = {
+  height: "85vh",
+  width: "100%",
+};
+
+const center = {
+  lat: 43.6532,
+  lng: -79.3832,
+};
+
 function Map() {
   const isMobile = useMediaQuery("(min-width: 600px)");
 
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: "AIzaSyAO_AswjQW9ZtbedjSwaM0GnTAY8zSJpoo",
+  });
+
+  const [map, setMap] = useState(null);
+
+  const onLoad = useCallback(function callback(map) {
+    const bounds = new window.google.maps.LatLngBounds(center);
+    map.fitBounds(bounds);
+    setMap(map);
+  }, []);
+
+  const onUnmount = useCallback(function callback(map) {
+    setMap(null);
+  }, []);
+
   const coordinate = { lat: 0, lng: 0 };
   return (
-    <MapContainer>
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: "AIzaSyAO_AswjQW9ZtbedjSwaM0GnTAY8zSJpoo" }}
-        defaultCenter={coordinate}
-        center={coordinate}
-        defaultZoom={14}
-        margin={[50, 50, 50, 50]}
-        // options={""}
-        // onChange={""}
-        // onChildClick={""}
-      ></GoogleMapReact>
-    </MapContainer>
+    isLoaded && (
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={5}
+        onLoad={onLoad}
+        onUnmount={onUnmount}
+      >
+        {/* Child components, such as markers, info windows, etc. */}
+      </GoogleMap>
+    )
   );
 }
 
