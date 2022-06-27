@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+
+import { getPlacesData } from "../../api/index";
 
 import SearchList from "../../components/searchList/SearchList";
 import Map from "../../components/map/Map";
@@ -10,6 +12,15 @@ import Box from "@mui/material/Box";
 const drawerWidth = 240;
 
 function SearchPage() {
+  const [places, setPlaces] = useState([]);
+
+  useEffect(() => {
+    getPlacesData().then((data) => {
+      console.log(data);
+      setPlaces(data);
+    });
+  }, []);
+
   return (
     <Box
       component="main"
