@@ -8,6 +8,7 @@ const options = {
     location: "38.8976763,-77.0365298",
     radius: "200000",
     language: "en",
+    keyword: "restaurant",
     type: "restaurant",
   },
   headers: {
