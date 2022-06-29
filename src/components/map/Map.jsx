@@ -1,5 +1,10 @@
 import React, { useState, useCallback } from "react";
-import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  useJsApiLoader,
+  LoadScript,
+  LatLngBounds,
+} from "@react-google-maps/api";
 import { Paper, Typography, useMediaQuery } from "@mui/material";
 import Rating from "@mui/lab";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -12,11 +17,6 @@ import { styled, alpha } from "@mui/material/styles";
 //   justifyContent: "center",
 //   width: "100px",
 // }));
-
-const MapContainer = styled("div")(({ theme }) => ({
-  height: "85vh",
-  width: "100%",
-}));
 
 const MarkerContainer = styled("div")(({ theme }) => ({
   position: "absolute",
@@ -33,17 +33,12 @@ const containerStyle = {
   width: "100%",
 };
 
-const center = {
-  lat: 43.6532,
-  lng: -79.3832,
-};
-
-function Map() {
+function Map({ setCenter, setBounds, center }) {
   const isMobile = useMediaQuery("(min-width: 600px)");
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "AIzaSyAO_AswjQW9ZtbedjSwaM0GnTAY8zSJpoo",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   });
 
   const [map, setMap] = useState(null);
@@ -52,25 +47,34 @@ function Map() {
     const bounds = new window.google.maps.LatLngBounds(center);
     map.fitBounds(bounds);
     setMap(map);
+
+    console.log(map);
   }, []);
 
   const onUnmount = useCallback(function callback(map) {
     setMap(null);
   }, []);
 
-  const coordinate = { lat: 0, lng: 0 };
+  const handleCenterChanged = () => {
+    const newCenter = new window.google.maps.LatLngBounds().getCenter();
+    console.log(newCenter);
+  };
+
   return (
-    isLoaded && (
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={5}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
-      >
-        {/* Child components, such as markers, info windows, etc. */}
-      </GoogleMap>
-    )
+    <>
+      {isLoaded && (
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={15}
+          onLoad={onLoad}
+          onCenterChanged={handleCenterChanged}
+          onUnmount={onUnmount}
+        >
+          {/* Child components, such as markers, info windows, etc. */}
+        </GoogleMap>
+      )}
+    </>
   );
 }
 

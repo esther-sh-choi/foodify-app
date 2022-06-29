@@ -13,11 +13,16 @@ const drawerWidth = 240;
 
 function SearchPage() {
   const [places, setPlaces] = useState([]);
+  const [center, setCenter] = useState({
+    lat: 43.6532,
+    lng: -79.3832,
+  });
+  const [bounds, setBounds] = useState();
 
   useEffect(() => {
     getPlacesData().then((data) => {
-      console.log(data);
-      setPlaces(data);
+      console.log(data.results);
+      setPlaces(data.results);
     });
   }, []);
 
@@ -33,7 +38,11 @@ function SearchPage() {
       <Toolbar />
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
-          <Map></Map>
+          <Map
+            setCenter={setCenter}
+            setBounds={setBounds}
+            center={center}
+          ></Map>
         </Grid>
         <Grid item xs={12} md={4}>
           <SearchList></SearchList>
