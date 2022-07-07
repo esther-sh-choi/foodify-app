@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import { createTheme } from "@mui/material/styles";
 import { ThemeProvider } from "@emotion/react";
 
 import Sidebar from "./components/sidebar/Sidebar";
+import LocationContext from "./api/locationContext";
 
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
@@ -30,22 +31,20 @@ const themeLight = createTheme({
   },
 });
 
-const themeDark = createTheme({
-  palette: {
-    background: {
-      default: "#222222",
-    },
-    text: {
-      primary: "#ffffff",
-    },
-  },
-});
-
 function App() {
-  const [light, setLight] = useState(true);
+  const locationCtx = useContext(LocationContext);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      locationCtx.saveLocation({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      });
+    });
+  }, []);
 
   return (
-    <ThemeProvider theme={light ? themeLight : themeDark}>
+    <ThemeProvider theme={themeLight}>
       <div className="app">
         <Sidebar />
         <Routes>

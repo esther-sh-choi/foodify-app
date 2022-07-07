@@ -5,7 +5,7 @@ const URL =
 
 const options = {
   params: {
-    location: "38.8976763,-77.0365298",
+    location: "",
     radius: "200000",
     language: "en",
     keyword: "restaurant",
@@ -26,10 +26,17 @@ const options = {
 //     console.error(error);
 //   });
 
-export const getPlacesData = async () => {
+export const getPlacesData = async (lat, lng) => {
   try {
     //request
+    options.params.location = `${lat}, ${lng}`;
     const { data } = await axios.get(URL, options);
+    //destructuring, made a variable called data {data: myData} make a variable called myData.
+    //Study promise -> async-await -> try-catch : error handling
+    //Async -> set time out
+    // Don't know how long it will take, unlike setTimeout. SO we use promise.
+    // const callApi = new Promise((resolve, reject) => code that takes long time.)
+    // .then and .catch
     return data;
   } catch (error) {
     console.error(error);

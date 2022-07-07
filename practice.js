@@ -1,16 +1,26 @@
-var longestCommonPrefix = function (strs) {
-  let prefix = "";
-  let i = 0;
+var generateParenthesis = function (n) {
+  if (n < 2) return ["()"];
+  let parNums = {
+    1: ["()"],
+  };
+  for (let i = 2; i <= n; i++) {
+    parNums[i] = [
+      parNums[i - 1].map((paranthesis) => `()${paranthesis}`),
+      parNums[i - 1].map((paranthesis) => `${paranthesis}()`),
+      parNums[i - 1].map((paranthesis) => `(${paranthesis})`),
+    ];
 
-  while (i >= 0) {
-    let currentLetter = strs[0][i];
-    if (strs.every((str) => str[i] === currentLetter)) {
-      prefix += currentLetter;
-      i++;
-    } else break;
+    parNums[i] = [...new Set(parNums[i].flat())];
   }
 
-  return prefix;
+  console.log(parNums);
+  console.log(parNums[n]);
+
+  return parNums[n];
 };
 
-console.log(longestCommonPrefix([""]));
+generateParenthesis[4];
+
+["(())(())"];
+
+[];
