@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   GoogleMap,
   useJsApiLoader,
@@ -33,7 +33,7 @@ const containerStyle = {
   width: "100%",
 };
 
-function Map({ setCenter, setBounds, center }) {
+function Map() {
   const isMobile = useMediaQuery("(min-width: 600px)");
 
   const { isLoaded } = useJsApiLoader({
@@ -42,13 +42,20 @@ function Map({ setCenter, setBounds, center }) {
   });
 
   const [map, setMap] = useState(null);
+  const [center, setCenter] = useState(
+    JSON.parse(localStorage.getItem("location"))
+  );
+
+  // useEffect(() => {
+  //   setCenter(JSON.parse(localStorage.getItem("location")));
+  // }, []);
 
   const onLoad = useCallback(function callback(map) {
     const bounds = new window.google.maps.LatLngBounds(center);
     map.fitBounds(bounds);
     setMap(map);
 
-    console.log(map);
+    console.log(center);
   }, []);
 
   const onUnmount = useCallback(function callback(map) {
@@ -57,12 +64,12 @@ function Map({ setCenter, setBounds, center }) {
 
   const handleCenterChanged = () => {
     const newCenter = new window.google.maps.LatLngBounds().getCenter();
-    console.log(newCenter);
+    console.log(newCenter.lat());
   };
 
   return (
     <>
-      {isLoaded && (
+      {isLoaded && center !== null && (
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}

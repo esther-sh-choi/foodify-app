@@ -13,14 +13,17 @@ const drawerWidth = 240;
 
 function SearchPage() {
   const [places, setPlaces] = useState([]);
-  const [center, setCenter] = useState({
-    lat: 43.6532,
-    lng: -79.3832,
-  });
+  const [center, setCenter] = useState(
+    JSON.parse(localStorage.getItem("location"))
+  );
   const [bounds, setBounds] = useState();
 
   useEffect(() => {
-    getPlacesData().then((data) => {
+    setCenter(JSON.parse(localStorage.getItem("location")));
+
+    console.log(center);
+
+    getPlacesData(center.lat, center.lng).then((data) => {
       console.log(data.results);
       setPlaces(data.results);
     });
